@@ -22,14 +22,27 @@ p {
     text-align: center;
 }
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center img {
+    height: auto;
+}
+
+
 .piecomp {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-around;
 }
 
-.piecol {
-    flex: 50%;
+.piecomp img {
+    width: 100%;
+    height: auto;
 }
 
 .container-flex {

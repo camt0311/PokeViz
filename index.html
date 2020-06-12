@@ -15,16 +15,16 @@
 </head>
 
 <body>
-    <center><img src="./assets/Pokemon-title.webp" alt="Classic Pokemon title with smiling Pikachu" width="324"
-            height="164"></center>
-    <center>
-        <h1 style="font-size: xx-large;">Who will you choose?</h1>
-        <h2 style="font-size: x-large;">These visualizations will help you build your team to win the game!</h2>
-    </center>
+    <img src="./assets/Pokemon-title.webp" alt="Classic Pokemon title with smiling Pikachu" width="324" height="164" class="center">
+    <h1 style="font-size: xx-large; text-align: center;">Who will you choose?</h1>
+    <h2 style="font-size: x-large; text-align: center;">These visualizations will help you build your team to win the game!</h2>
     <hr>
     <br><br><br><br><br><br>
 
     <p>There are 721 Pokemon with 18 different types across the 6 Generations.</p>
+
+    <!-- Flex Pie -->
+
     <br><br><br><br>
     <div class="piecomp">
         <div class="piecol">
@@ -40,7 +40,9 @@
     <p>The majority of Pokemon are <span style="color: #6390F0">WATER</span> and <span style="color: #A98FF3">FLYING</span> types.</p>
     <br><br><br><br>
 
-    <center><img src="./assets/effective.jpg" alt="eff"></center>
+    <!-- Effectiveness -->
+
+    <img src="./assets/effective.jpg" alt="eff" width="1200" class="center">
     <br><br><br><br>
     <p>According to the type effectiveness chart, you should choose Pokemon with 
         <span style="color: #7AC74C">GRASS</span>,
@@ -51,26 +53,32 @@
         typing.</p>
     <br><br><br><br>
 
+    <!-- Stats -->
+
     <p>Each Pokemon's stats are split among 6 statistics: HP, Attack, Defense, Special Attack, Special Defense, Speed.</p>
     <br><br><br><br>
-    <center><img src="./assets/stat_line.png" alt="stat_line" width="40%" height="40%"></center>
+    <img src="./assets/stat_line.png" alt="stat_line" width="600" class="center">
     <br><br><br><br>
     <p>We can see that Attack and Defense are the most important.</p>
     <br><br><br><br><br><br>
     
+    <!-- Legendary Scatter -->
+
     <p>Legendary Pokemon are strong!</p>
     <p>If you want to battle the boss, you better have a strong team.</p>
     <br><br><br><br>
-    <center><img src="./assets/leg_scatter.png" alt="leg_scatter" width="40%" height="40%"></center>
+    <img src="./assets/leg_scatter.png" alt="leg_scatter" width="700" class="center">
     <br><br><br><br>
 
-    <center><h1>Compare Pokemon using the tool below.</h1></center>
+    <!-- Radar Flex -->
+
+    <h1 style="text-align: center;">Compare Pokemon using the tool below.</h1>
     <div class="container-flex">
         <div class="row">
             <!-- Information on the first Pokemon -->
             <div id="pokemon1info" class="column column-4">
                 <h1 id="pokemon1name"></h1>
-                <img id="pokemon1Image" />
+                <img id="pokemon1Image" src="./assets/pikachu.png" alt="pokemon1Image">
                 <h3 id="pokemon1Type1"></h3>
                 <h3 id="pokemon1Type2"></h3>
                 <br>
@@ -88,7 +96,7 @@
             <!-- Information on another Pokemon -->
             <div id="pokemon2info" class="column column-4">
                 <h1 id="pokemon2name"></h1>
-                <img id="pokemon2Image" />
+                <img id="pokemon2Image" src="./assets/pikachu.png" alt="pokemon2Image">
                 <h3 id="pokemon2Type1"></h3>
                 <h3 id="pokemon2Type2"></h3>
                 <br>
