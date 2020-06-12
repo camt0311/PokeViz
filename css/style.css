@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 11px;
+    font-weight: 300;
+    fill: #242424;
+}
+
+hr {
+    width: 800px;
+    margin: 0 auto;
+}
+
+p {
+    font-size: x-large;
+    text-align: center;
+}
+
+.piecomp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.piecol {
+    flex: 50%;
+}
+
+.container-flex {
+    width: 100%;
+    max-width: 1500px;
+    padding: 0 12px;
+    margin: 20px auto;
+}
+
+.end {
+    margin-top: 20px;
+}

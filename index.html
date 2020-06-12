@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Pokemon Viz</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link href="./css/fonts/fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="./css/radar.css" rel="stylesheet" type="text/css">
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <center><img src="./assets/Pokemon-title.webp" alt="Classic Pokemon title with smiling Pikachu" width="324"
+            height="164"></center>
+    <center>
+        <h1 style="font-size: xx-large;">Who will you choose?</h1>
+        <h2 style="font-size: x-large;">These visualizations will help you build your team to win the game!</h2>
+    </center>
+    <hr>
+    <br><br><br><br><br><br>
+
+    <p>There are 721 Pokemon with 18 different types across the 6 Generations.</p>
+    <br><br><br><br>
+    <div class="piecomp">
+        <div class="piecol">
+            <h3 style="text-align: center; font-size: large;">Distribution of Primary Type</h3>
+            <img src="./assets/t1pie.png" alt="t1pie">
+        </div>
+        <div class="piecol">
+            <h3 style="text-align: center; font-size: large;">Distribution of Secondary Type</h3>
+            <img src="./assets/t2pie.png" alt="t2pie">
+        </div>
+    </div>
+    <br><br><br><br>
+    <p>The majority of Pokemon are <span style="color: #6390F0">WATER</span> and <span style="color: #A98FF3">FLYING</span> types.</p>
+    <br><br><br><br>
+
+    <center><img src="./assets/effective.jpg" alt="eff"></center>
+    <br><br><br><br>
+    <p>According to the type effectiveness chart, you should choose Pokemon with 
+        <span style="color: #7AC74C">GRASS</span>,
+        <span style="color: #F7D02C">ELECTRIC</span>, 
+        <span style="color: #96D9D6">ICE</span>, 
+        and/or 
+        <span style="color: #B6A136">ROCK</span> 
+        typing.</p>
+    <br><br><br><br>
+
+    <p>Each Pokemon's stats are split among 6 statistics: HP, Attack, Defense, Special Attack, Special Defense, Speed.</p>
+    <br><br><br><br>
+    <center><img src="./assets/stat_line.png" alt="stat_line" width="40%" height="40%"></center>
+    <br><br><br><br>
+    <p>We can see that Attack and Defense are the most important.</p>
+    <br><br><br><br><br><br>
+    
+    <p>Legendary Pokemon are strong!</p>
+    <p>If you want to battle the boss, you better have a strong team.</p>
+    <br><br><br><br>
+    <center><img src="./assets/leg_scatter.png" alt="leg_scatter" width="40%" height="40%"></center>
+    <br><br><br><br>
+
+    <center><h1>Compare Pokemon using the tool below.</h1></center>
+    <div class="container-flex">
+        <div class="row">
+            <!-- Information on the first Pokemon -->
+            <div id="pokemon1info" class="column column-4">
+                <h1 id="pokemon1name"></h1>
+                <img id="pokemon1Image" />
+                <h3 id="pokemon1Type1"></h3>
+                <h3 id="pokemon1Type2"></h3>
+                <br>
+                <div class="searchBox">
+                    <p class="searchLabel">SEARCH:</p>
+                    <div class="row">
+                        <input list="pokemon1Datalist" name="pokemon1Search" id="pokemon1Input" class="column">
+                        <datalist id="pokemon1Datalist"></datalist>
+                        <a class="butn column" id="pokemon1SearchButton">DISPLAY</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Radar chart -->
+            <div class="radarChart column column-6"></div>
+            <!-- Information on another Pokemon -->
+            <div id="pokemon2info" class="column column-4">
+                <h1 id="pokemon2name"></h1>
+                <img id="pokemon2Image" />
+                <h3 id="pokemon2Type1"></h3>
+                <h3 id="pokemon2Type2"></h3>
+                <br>
+                <p class="searchLabel">SEARCH:</p>
+                <div class="row">
+                    <input list="pokemon2Datalist" name="pokemon2Search" id="pokemon2Input" class="column">
+                    <datalist id="pokemon2Datalist"></datalist>
+                    <a class="butn column" id="pokemon2SearchButton">DISPLAY</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./scripts/libs/radarchart.js"></script>
+    <script src="./scripts/radar.js"></script>
+    <script>
+
+        // Retrieve ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        var pokemonId = urlParams.get('id');
+
+        // Data to be passed to the RadarChart function
+        var pokeData = [
+            [],
+            []
+        ]
+
+        // Axes on the radar graph
+        const allowedKeys = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"]
+
+        // If there is no ID, a placeholder image is set for each Pokemon
+        if (!pokemonId) {
+            d3.select("#pokemon1Image").attr("src", "./assets/pikachu.png")
+            d3.select("#pokemon2Image").attr("src", "./assets/pikachu.png")
+        }
+
+        // Get buttons and search boxes
+        var pokemon1input = document.querySelector('#pokemon1Input');
+        var pokemon1SearchButton = document.querySelector("#pokemon1SearchButton");
+
+        var pokemon2input = document.querySelector('#pokemon2Input');
+        var pokemon2SearchButton = document.querySelector("#pokemon2SearchButton");
+
+        d3.json("./data/pokemon.json", function (error, data) {
+            // If there is no value in the search box for another Pokemon, a placeholder image is set
+            if (!pokemon2input.value) d3.select("#pokemon2Image").attr("src", "./assets/pikachu.png")
+
+            // Fill in the values of the datalist element with all Pokemon names from the data set
+            d3.select("#pokemon1Datalist").selectAll("option").data(data).enter().append("option").attr("value",
+                function (d) {
+                    return d.Name
+                })
+            d3.select("#pokemon2Datalist").selectAll("option").data(data).enter().append("option").attr("value",
+                function (d) {
+                    return d.Name
+                })
+
+            // When the button is clicked, the Pokemon ID is retrieved using the name entered
+            // and all elements for that Pokemon are drawn
+            pokemon1SearchButton.addEventListener("click", function () {
+                pokemonId = findPokemonByName(pokemon1input.value, data)
+                drawAll(data, pokemonId, 1)
+            })
+
+            pokemon2SearchButton.addEventListener("click", function () {
+                pokemonId = findPokemonByName(pokemon2input.value, data)
+                drawAll(data, pokemonId, 2)
+            })
+
+            // If there is an ID (retrieved from the URL), the data for that Pokemon is visualized
+            if (pokemonId)
+                drawAll(data, pokemonId, 1)
+        })
+    </script>
+</body>
+
+</html>
